@@ -4,7 +4,7 @@ export default interface Tender {
   description: string;
   url: string;
   deadline: string;
-  businessUnit: string;
+  unit: string;
   country: string;
   summary: string;
   score: number;

@@ -93,7 +93,7 @@ export default function TenderDetailModal({
                 <div className="flex items-center gap-2 text-sm text-gray-600">
                   <FiTag className="w-4 h-4 text-gray-400" />
                   <span className="font-medium">Business Unit:</span>
-                  <span>{tender.businessUnit}</span>
+                  <span>{tender.unit}</span>
                 </div>
                 <div
                   className={`flex items-center gap-2 text-sm ${

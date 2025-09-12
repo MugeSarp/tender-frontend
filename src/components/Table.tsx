@@ -218,7 +218,7 @@ export default function Table({
                 <td className="px-6 py-4 whitespace-nowrap border-b border-gray-200">
                   <div className="flex items-center text-sm text-gray-900">
                     <FiTag className="w-4 h-4 mr-1 text-gray-400" />
-                    {tender.businessUnit}
+                    {tender.unit}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap border-b border-gray-200">

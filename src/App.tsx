@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Toaster } from "react-hot-toast";
 import Navbar from "./components/Navbar";
 import StatCards from "./components/StatCards";
 import Table from "./components/Table";
@@ -16,6 +17,21 @@ function App() {
   const [tenders, setTenders] = useState<Tender[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<TabType>("main");
+  const [keywords, setKeywords] = useState<{
+    iot: string[];
+    experience: string[];
+    marine: string[];
+    target: string[];
+    software: string[];
+    bisan_emira: string[];
+  }>({
+    iot: [],
+    experience: [],
+    marine: [],
+    target: [],
+    software: [],
+    bisan_emira: [],
+  });
 
   const handleTenderSelect = (tender: Tender) => {
     setSelectedTender(tender);
@@ -38,8 +54,32 @@ function App() {
     }
   };
 
+  const fetchKeywords = async () => {
+    try {
+      const response = await httpClient.get("/api/keywords");
+      setKeywords(response.data);
+    } catch (error) {
+      console.error("Error fetching keywords:", error);
+    }
+  };
+
+  const updateKeywords = async (updatedKeywords: typeof keywords) => {
+    try {
+      await httpClient.post("/api/keywords", updatedKeywords);
+      setKeywords(updatedKeywords);
+      await httpClient.post("/api/filter");
+      await fetchTenders();
+
+      console.log("Keywords updated and tenders refetched successfully");
+    } catch (error) {
+      console.error("Error updating keywords:", error);
+      throw error;
+    }
+  };
+
   useEffect(() => {
     fetchTenders();
+    fetchKeywords();
   }, []);
 
   return (
@@ -88,7 +128,12 @@ function App() {
           </>
         )}
 
-        {activeTab === "prompt" && <PromptDetails />}
+        {activeTab === "prompt" && (
+          <PromptDetails
+            keywords={keywords}
+            onKeywordsUpdate={updateKeywords}
+          />
+        )}
 
         <TenderDetailModal
           tender={selectedTender}
@@ -96,6 +141,34 @@ function App() {
           onClose={handleCloseModal}
         />
       </div>
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: "#10b981",
+            color: "#fff",
+          },
+          success: {
+            duration: 3000,
+            iconTheme: {
+              primary: "#fff",
+              secondary: "#10b981",
+            },
+          },
+          error: {
+            duration: 4000,
+            style: {
+              background: "#ef4444",
+              color: "#fff",
+            },
+            iconTheme: {
+              primary: "#fff",
+              secondary: "#ef4444",
+            },
+          },
+        }}
+      />
     </div>
   );
 }
