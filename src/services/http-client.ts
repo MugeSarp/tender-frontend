@@ -2,7 +2,7 @@ import axios from "axios";
 import { isDevelopment } from "../config";
 
 export const httpClient = axios.create({
-  baseURL: isDevelopment ? "https://tender.infinia.com.tr" : undefined,
+  baseURL: isDevelopment ? "http://192.168.89.164:5680" : undefined,
 });
 
 export default httpClient;

@@ -1,7 +1,5 @@
-import { useState, useEffect } from "react";
 import { FiClock, FiAlertTriangle, FiFileText } from "react-icons/fi";
 import type Tender from "../interfaces/tender";
-import httpClient from "../services/http-client";
 
 interface StatCardProps {
   title: string;
@@ -9,6 +7,11 @@ interface StatCardProps {
   description: string;
   icon: React.ReactNode;
   color: string;
+}
+
+interface StatCardsProps {
+  tenders: Tender[];
+  loading: boolean;
 }
 
 function StatCard({ title, value, description, icon, color }: StatCardProps) {
@@ -28,55 +31,30 @@ function StatCard({ title, value, description, icon, color }: StatCardProps) {
   );
 }
 
-export default function StatCards() {
-  const [stats, setStats] = useState({
+export default function StatCards({ tenders, loading }: StatCardsProps) {
+  const stats = {
     urgentTenders: 0,
     totalNotices: 0,
     upcomingDeadlines: 0,
-  });
-  const [loading, setLoading] = useState(true);
+  };
 
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const response = await httpClient.get("/api/tenders");
-        const tenders: Tender[] = response.data.tenders || response.data;
+  if (!loading && tenders.length > 0) {
+    const now = new Date();
+    const tenDaysFromNow = new Date(now.getTime() + 10 * 24 * 60 * 60 * 1000);
+    const threeDaysFromNow = new Date(now.getTime() + 3 * 24 * 60 * 60 * 1000);
 
-        const now = new Date();
-        const tenDaysFromNow = new Date(
-          now.getTime() + 10 * 24 * 60 * 60 * 1000
-        );
-        const threeDaysFromNow = new Date(
-          now.getTime() + 3 * 24 * 60 * 60 * 1000
-        );
+    stats.urgentTenders = tenders.filter(
+      (t) =>
+        new Date(t.deadline) <= tenDaysFromNow && new Date(t.deadline) > now
+    ).length;
 
-        const urgentTenders = tenders.filter(
-          (t) =>
-            new Date(t.deadline) <= tenDaysFromNow && new Date(t.deadline) > now
-        ).length;
+    stats.totalNotices = tenders.length;
 
-        const totalNotices = tenders.length;
-
-        const upcomingDeadlines = tenders.filter(
-          (t) =>
-            new Date(t.deadline) <= threeDaysFromNow &&
-            new Date(t.deadline) > now
-        ).length;
-
-        setStats({
-          urgentTenders,
-          totalNotices,
-          upcomingDeadlines,
-        });
-      } catch (error) {
-        console.error("Error fetching stats:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchStats();
-  }, []);
+    stats.upcomingDeadlines = tenders.filter(
+      (t) =>
+        new Date(t.deadline) <= threeDaysFromNow && new Date(t.deadline) > now
+    ).length;
+  }
 
   if (loading) {
     return (

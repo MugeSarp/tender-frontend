@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import {
   FiCalendar,
   FiMapPin,
@@ -8,36 +8,23 @@ import {
   FiChevronDown,
 } from "react-icons/fi";
 import type Tender from "../interfaces/tender";
-import httpClient from "../services/http-client";
 
 interface TableProps {
+  tenders: Tender[];
+  loading: boolean;
   onTenderSelect: (tender: Tender) => void;
 }
 
 type SortField = "score" | "deadline" | "none";
 type SortDirection = "asc" | "desc";
 
-export default function Table({ onTenderSelect }: TableProps) {
-  const [tenders, setTenders] = useState<Tender[]>([]);
-  const [loading, setLoading] = useState(true);
-
+export default function Table({
+  tenders,
+  loading,
+  onTenderSelect,
+}: TableProps) {
   const [sortField, setSortField] = useState<SortField>("none");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
-
-  const fetchTenders = async () => {
-    try {
-      const response = await httpClient.get("/api/tenders");
-      setTenders(response.data.tenders);
-    } catch (error) {
-      console.error("Error fetching tenders:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchTenders();
-  }, []);
 
   // Sort tenders based on current sort field and direction
   const sortedTenders = useMemo(() => {
@@ -135,7 +122,7 @@ export default function Table({ onTenderSelect }: TableProps) {
               onClick={() => handleSort("none")}
               className={`px-3 py-1 text-sm rounded-md transition-colors duration-200 ${
                 sortField === "none"
-                  ? "bg-blue-100 text-blue-800 border border-blue-300"
+                  ? "bg-red-100 text-red-800 border border-red-300"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
               }`}
             >
@@ -145,7 +132,7 @@ export default function Table({ onTenderSelect }: TableProps) {
               onClick={() => handleSort("score")}
               className={`flex items-center gap-1 px-3 py-1 text-sm rounded-md transition-colors duration-200 ${
                 sortField === "score"
-                  ? "bg-blue-100 text-blue-800 border border-blue-300"
+                  ? "bg-red-100 text-red-800 border border-red-300"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
               }`}
             >
@@ -163,7 +150,7 @@ export default function Table({ onTenderSelect }: TableProps) {
               onClick={() => handleSort("deadline")}
               className={`flex items-center gap-1 px-3 py-1 text-sm rounded-md transition-colors duration-200 ${
                 sortField === "deadline"
-                  ? "bg-blue-100 text-blue-800 border border-blue-300"
+                  ? "bg-red-100 text-red-800 border border-red-300"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
               }`}
             >
@@ -255,7 +242,7 @@ export default function Table({ onTenderSelect }: TableProps) {
                     href={tender.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-blue-600 hover:text-blue-900 flex items-center"
+                    className="text-red-600 hover:text-red-900 flex items-center"
                     onClick={(e) => e.stopPropagation()}
                   >
                     <FiExternalLink className="w-4 h-4 mr-1" />
