@@ -198,9 +198,9 @@ export default function Table({
                 onClick={() => onTenderSelect(tender)}
               >
                 <td className="px-6 py-4 whitespace-nowrap border-b border-gray-200">
-                  <div className="max-w-xs">
+                  <div className="max-w-lg">
                     <div className="text-sm font-medium text-gray-900 truncate">
-                      {truncateText(tender.title, 50)}
+                      {truncateText(tender.title, 80)}
                     </div>
                     <div className="text-sm text-gray-500 truncate">
                       {truncateText(tender.summary, 60)}
