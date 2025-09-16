@@ -23,14 +23,14 @@ function App() {
     marine: string[];
     target: string[];
     software: string[];
-    bisan_emira: string[];
+    bislan_emira: string[];
   }>({
     iot: [],
     experience: [],
     marine: [],
     target: [],
     software: [],
-    bisan_emira: [],
+    bislan_emira: [],
   });
 
   const handleTenderSelect = (tender: Tender) => {

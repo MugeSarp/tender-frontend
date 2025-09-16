@@ -5,7 +5,6 @@ import {
   FiMapPin,
   FiTag,
   FiExternalLink,
-  FiStar,
 } from "react-icons/fi";
 import type Tender from "../interfaces/tender";
 import { formatDate } from "../lib/utils";
@@ -34,11 +33,11 @@ export default function TenderDetailModal({
 
   if (!isOpen || !tender) return null;
 
-  const getScoreColor = (score: number) => {
+  /*const getScoreColor = (score: number) => {
     if (score >= 80) return "bg-green-100 text-green-800 border-green-200";
     if (score >= 60) return "bg-yellow-100 text-yellow-800 border-yellow-200";
     return "bg-gray-100 text-gray-800 border-gray-200";
-  };
+  };  */
 
   const isDeadlinePassed = new Date(tender.deadline) < new Date();
 
@@ -60,14 +59,6 @@ export default function TenderDetailModal({
               <h2 className="text-2xl font-bold text-gray-900">
                 Tender Details
               </h2>
-              <span
-                className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getScoreColor(
-                  tender.score
-                )}`}
-              >
-                <FiStar className="w-4 h-4 mr-1" />
-                Score: {tender.score}
-              </span>
             </div>
             <button
               onClick={onClose}

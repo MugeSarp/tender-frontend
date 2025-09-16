@@ -78,11 +78,11 @@ export default function Table({
     });
   };
 
-  const getScoreColor = (score: number) => {
+  /*const getScoreColor = (score: number) => {
     if (score >= 80) return "bg-green-100 text-green-800";
     if (score >= 60) return "bg-yellow-100 text-yellow-800";
     return "bg-gray-100 text-gray-800";
-  };
+  };  */
 
   const truncateText = (text: string, maxLength: number) => {
     return text.length > maxLength
@@ -184,9 +184,7 @@ export default function Table({
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Deadline
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Score
-              </th>
+
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Actions
               </th>
@@ -227,16 +225,7 @@ export default function Table({
                     {formatDate(tender.deadline)}
                   </div>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap border-b border-gray-200">
-                  <span
-                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getScoreColor(
-                      tender.score
-                    )}`}
-                  >
-                    <FiStar className="w-3 h-3 mr-1" />
-                    {tender.score}
-                  </span>
-                </td>
+
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium border-b border-gray-200">
                   <a
                     href={tender.url}
