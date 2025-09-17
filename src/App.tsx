@@ -18,19 +18,39 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<TabType>("main");
   const [keywords, setKeywords] = useState<{
-    iot: string[];
-    experience: string[];
-    marine: string[];
-    target: string[];
-    software: string[];
-    bislan_emira: string[];
+    related: {
+      iot: string[];
+      experience: string[];
+      marine: string[];
+      target: string[];
+      software: string[];
+      bislan_emira: string[];
+    };
+    unrelated: {
+      iot_unrelated: string[];
+      experience_unrelated: string[];
+      marine_unrelated: string[];
+      target_unrelated: string[];
+      software_unrelated: string[];
+      bislan_emira_unrelated: string[];
+    };
   }>({
-    iot: [],
-    experience: [],
-    marine: [],
-    target: [],
-    software: [],
-    bislan_emira: [],
+    related: {
+      iot: [],
+      experience: [],
+      marine: [],
+      target: [],
+      software: [],
+      bislan_emira: [],
+    },
+    unrelated: {
+      iot_unrelated: [],
+      experience_unrelated: [],
+      marine_unrelated: [],
+      target_unrelated: [],
+      software_unrelated: [],
+      bislan_emira_unrelated: [],
+    },
   });
 
   const handleTenderSelect = (tender: Tender) => {

@@ -4,7 +4,6 @@ import {
   FiMapPin,
   FiTag,
   FiExternalLink,
-  FiStar,
   FiChevronDown,
 } from "react-icons/fi";
 import type Tender from "../interfaces/tender";
@@ -84,12 +83,6 @@ export default function Table({
     return "bg-gray-100 text-gray-800";
   };  */
 
-  const truncateText = (text: string, maxLength: number) => {
-    return text.length > maxLength
-      ? text.substring(0, maxLength) + "..."
-      : text;
-  };
-
   if (loading) {
     return (
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
@@ -128,7 +121,7 @@ export default function Table({
             >
               Default
             </button>
-            <button
+            {/*<button
               onClick={() => handleSort("score")}
               className={`flex items-center gap-1 px-3 py-1 text-sm rounded-md transition-colors duration-200 ${
                 sortField === "score"
@@ -145,7 +138,7 @@ export default function Table({
                   }`}
                 />
               )}
-            </button>
+            </button> */}
             <button
               onClick={() => handleSort("deadline")}
               className={`flex items-center gap-1 px-3 py-1 text-sm rounded-md transition-colors duration-200 ${
@@ -197,13 +190,10 @@ export default function Table({
                 className="hover:bg-gray-50 cursor-pointer transition-colors duration-200"
                 onClick={() => onTenderSelect(tender)}
               >
-                <td className="px-6 py-4 whitespace-nowrap border-b border-gray-200">
-                  <div className="max-w-xs">
-                    <div className="text-sm font-medium text-gray-900 truncate">
-                      {truncateText(tender.title, 50)}
-                    </div>
-                    <div className="text-sm text-gray-500 truncate">
-                      {truncateText(tender.summary, 60)}
+                <td className="px-6 py-4  border-b border-gray-200">
+                  <div>
+                    <div className="text-sm font-medium text-gray-900 ">
+                      {tender.title}
                     </div>
                   </div>
                 </td>
